@@ -1,0 +1,43 @@
+/* -------------- RESET CODE -------------- */
+*{
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body,h1,h2,h3,h4,p,ul{
+    margin: 0;
+}
+
+a{
+    text-decoration: none;
+    color: inherit;
+}
+
+ul{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+span, a{
+    display: inline-block;
+}
+
+img{
+    max-width: 100%;
+}
+
+input, button, textarea{
+    background: none;
+    border: none;
+    outline: none;
+    color: inherit;
+    font-family: inherit;
+}
+
+button{
+    cursor: pointer;
+}
