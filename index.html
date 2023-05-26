@@ -44,8 +44,8 @@
       <a href="#contact-me">Contact me</a>
 
       <!-- <button>Your courses</button> -->
-      <button>shopping cart</button>
-      <button>login</button>
+      <button id="shoppingCartOpenButton">shopping cart</button>
+      <button id="loginButton">login</button>
 
     </nav>
   </header>
@@ -95,7 +95,7 @@
 
     <section id="courses" class="secundary-section" data-scroll-spy>
       <h2 class="secundary-section__h2">Courses i sell</h2>
-      <div class="secundary-section__loader-div" data-projects-loader>
+      <div class="secundary-section__loader-div" data-courses-loader>
           <img src="./assets/three-dots.svg" alt="loading" loading="lazy">
       </div>
     </section>
@@ -126,6 +126,14 @@
   <footer>
     version: 1.0.0
   </footer>
+
+  <div id="shoppingCartModal" class="modal hide">
+    <div class="card">
+      <h2>Shopping Cart</h2>
+      <button id="shoppingCartCloseButton">X</button>
+
+    </div>
+  </div>
 
   <script src="./scripts/index.js" type="module"></script>
 </body>

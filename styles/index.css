@@ -313,3 +313,30 @@
     background-color: transparent;
     color: var(--yellow-color);
 }
+
+/* ----------- shopping-cart-modal -----------  */
+.modal.hide{
+    display: none;
+}
+.modal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #0000009c;
+}
+
+.modal .card{
+    padding: 1rem;
+    background-color: white;
+    color: black;
+}
+
+.modal button{
+    color: red;
+    font-weight: bold;
+}
