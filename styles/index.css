@@ -33,6 +33,11 @@
         justify-content: space-between;
         align-items: center;
         padding-top: 1rem;
+        padding-bottom: 1rem;
+        background: black;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
     }
     
     .header nav{
@@ -49,10 +54,13 @@
         transition-property: background-size;
         transition-duration: 0.5s;
         padding-bottom: 0.35rem;
+        text-decoration: none;
+        color: var(--yellow-color);
     }
     
     .header a:hover{
         background-size: 100% 0.2rem;
+        color: var(--yellow-color);
     }
     
     .header button{
@@ -261,7 +269,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 25rem;
+    max-width: 28rem;
     gap: 1.5rem;
     position: relative;
 }
@@ -277,7 +285,7 @@
     justify-content: flex-start;
 }
 .contact-me-form__label{
-    width: 6rem;
+    width: 12rem;
     font-size: 1.25rem;
     color: var(--yellow-color);
 }
@@ -315,10 +323,10 @@
 }
 
 /* ----------- shopping-cart-modal -----------  */
-.modal.hide{
+.my-modal.hide{
     display: none;
 }
-.modal{
+.my-modal{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -327,16 +335,28 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background-color: #0000009c;
+    background-color: #1616169c;
+    z-index: 2000;
 }
 
-.modal .card{
+.my-modal .close-modal-btn{
+    color: var(--yellow-color);
+}
+
+.my-modal .card{
     padding: 1rem;
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: var(--yellow-color);
 }
 
-.modal button{
-    color: red;
+.my-modal button{
+    color: black;
     font-weight: bold;
+}
+
+.my-modal .my-link{
+    transition-duration: 0.5s;
+    text-decoration: underline;
+    color: var(--yellow-color);
+    cursor: pointer;
 }
