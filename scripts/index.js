@@ -236,13 +236,16 @@ setAnOberserver($allObservableSections, section => {
 
 const $loginOpenButton = d.querySelector('#loginOpenButton');
 
-$loginOpenButton.addEventListener('click', e => {
+if ($loginOpenButton) {
+    $loginOpenButton.addEventListener('click', e => {
+    
+        const $loginM = d.querySelector('#loginM');
+    
+        $loginM.classList.toggle('hide');
+    
+    })
+}
 
-    const $loginM = d.querySelector('#loginM');
-
-    $loginM.classList.toggle('hide');
-
-})
 
 const $loginCloseButton = d.querySelector('#loginCloseButton');
 
@@ -291,5 +294,55 @@ $loginOpenButtonAndCreatUserCloseButton.addEventListener('click', e => {
     const $loginM = d.querySelector('#loginM');
 
     $loginM.classList.remove('hide');
+
+})
+
+//
+const $yourCoursesOppenButton = d.querySelector('#yourCoursesOppenButton');
+
+if ($yourCoursesOppenButton) {
+    
+    $yourCoursesOppenButton.addEventListener('click', e => {
+    
+        const $yourCoursesM = d.querySelector('#yourCoursesM');
+    
+        $yourCoursesM.classList.toggle('hide');
+    
+    })
+
+}
+
+const $yourCoursesCloseButton = d.querySelector('#yourCoursesCloseButton');
+
+$yourCoursesCloseButton.addEventListener('click', e => {
+
+    const $yourCoursesM = d.querySelector('#yourCoursesM');
+
+    $yourCoursesM.classList.toggle('hide');
+
+})
+
+//
+const $shoppingCartOpenButton = d.querySelector('#shoppingCartOpenButton');
+
+if ($shoppingCartOpenButton) {
+    
+    $shoppingCartOpenButton.addEventListener('click', e => {
+    
+        const $shoppingCartM = d.querySelector('#shoppingCartM');
+    
+        $shoppingCartM.classList.toggle('hide');
+    
+    })
+
+}
+
+const $my4CloseButton = d.querySelector('#my4CloseButton');
+
+$my4CloseButton.addEventListener('click', e => {
+
+    const $shoppingCartM = d.querySelector('#shoppingCartM');
+
+    $shoppingCartM.classList.toggle('hide');
 
 })

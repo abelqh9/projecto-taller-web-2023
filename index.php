@@ -1,9 +1,10 @@
 <?php include("conexion.php") ?>
 <?php
 
+  session_start();
 
   $objConexion = new conexion();
-  $userFromBd;
+  $userIdFromBd = $_SESSION['userLogin'];
 
   // Get tecnologias
   $tecnologiasFromBd = $objConexion -> consultar("SELECT * FROM `tecnologias`");
@@ -17,19 +18,27 @@
   $cursosFromBd = $objConexion -> consultar("SELECT * FROM `cursos`");
   // print_r($cursosFromBd);
   
-  session_start();
+  // Get cursosyusuarios
+  $cursosDelusuarioFromBd = $objConexion -> consultar("SELECT * FROM cursosyusuarios JOIN cursos ON cursosyusuarios.curso_id = cursos.id WHERE cursosyusuarios.usuario_id = $userIdFromBd");
+  // print_r($cursosyusuariosFromBd);
+
+  function filterPurchaseds($curso){
+    return $curso['purchased'] > 0;
+  }
+
+  function filterNoPurchaseds($curso){
+    return $curso['purchased'] == 0;
+  }
+
+  $cursosComprados = array_filter($cursosDelusuarioFromBd, 'filterPurchaseds');
+  $cursosNoComprados = array_filter($cursosDelusuarioFromBd, 'filterNoPurchaseds');
+
+  $cursosCompradosIds = array_column(array_map(function ($object) {return $object['id'];}, $cursosComprados), null);
+  $cursosNoCompradosIds = array_column(array_map(function ($object) {return $object['id'];}, $cursosNoComprados), null);
 
   if (isset($_GET['Message'])) {
     print '<script type="text/javascript">alert("' . $_GET['Message'] . '");</script>';
   }
-
-  // if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] > 0) {
-
-  //   $sql="SELECT * FROM `usuarios` WHERE id = `.$_SESSION['userLogin'].`;";
-
-  //   $userFromBd = $objConexion -> consultar($sql);
-
-  // }
 
 ?>
 
@@ -87,7 +96,7 @@
       <?php
         if (isset($_SESSION['userLogin']) && $_SESSION['userLogin'] > 0) {
           echo "
-            <button id='loginCartOpenButton'>Your courses</button>
+            <button id='yourCoursesOppenButton'>Your courses</button>
             <button id='shoppingCartOpenButton'>shopping cart</button>
 
             <!-- Logout Form -->
@@ -173,9 +182,28 @@
                     <h3 class="project-card__h3"><?php echo $curso['nombre'] ?></h3>
                     <p class="project-card__p"><?php echo $curso['descripcion'] ?></p>
                 </div>
+                <?php
+                  if (in_array($curso['id'], $cursosCompradosIds)) {
+                    ?>
+                      <button type='button' class='btn btn-primary'>En tus cursos</button>
+                    <?php
+                  } else if (in_array($curso['id'], $cursosNoCompradosIds)) {
+                    ?>
+                      <button type='button' class='btn btn-primary'>En tu carrito</button>
+                    <?php
+                  } else {
+                    ?>
+                      <form action='add_curso_usuario.php' method='post' style='margin: 0;'>
+                        <input type='hidden' name='curso_id' value=<?php echo $curso['id']; ?>>
+                        <input type='hidden' name='usuario_id' value=<?php echo $userIdFromBd; ?>>
+                        <button type='submit' class='btn btn-primary'>Comprar</button>
+                      </form>
+                    <?php
+                  }
+                ?>
             </li>
           <?php } ?>
-        </ul>
+      </ul>
     </section>
 
     <section id="contact-me" class="secundary-section" data-scroll-spy>
@@ -279,6 +307,100 @@
     </div>
   </div>
   <!-- / Create User Modal -->
+
+  <!-- Your courses Modal -->
+  <div id="yourCoursesM" class="my-modal rounded hide">
+    <div class="card container col-4">
+
+      <!-- Modal Header -->
+      <div class="my-modal-header d-flex align-items-center justify-content-between mb-3">
+        <h2 class="secundary-section__h2">Your courses</h2>
+        <button id="yourCoursesCloseButton" class="close-modal-btn">X</button>
+      </div>
+      <!-- Modal Header -->
+
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">IMAGE</th>
+            <th scope="col">NAME</th>
+            <th scope="col">DESCIPTION</th>
+            <th scope="col">ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($cursosComprados as $curso): ?>
+            <tr>
+              <th scope="row"><?php echo $curso[0]; ?></th>
+              <td> <img width=150 src="<?php echo $curso['imagen']; ?>"></td>
+              <td><?php echo $curso['nombre']; ?></td>
+              <td><?php echo $curso['descripcion']; ?></td>
+              <td class="">
+                <form action='delete-curso-usuario.php' method='post' style='margin: 0;'>
+                  <input type='hidden' name='id' value=<?php echo $curso[0]; ?>>
+                  <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+  <!-- / Your courses Modal -->
+
+  <!-- Your shopping cart Modal -->
+  <div id="shoppingCartM" class="my-modal rounded hide">
+    <div class="card container col-4">
+
+      <!-- Modal Header -->
+      <div class="my-modal-header d-flex align-items-center justify-content-between mb-3">
+        <h2 class="secundary-section__h2">Your shopping car</h2>
+        <button id="my4CloseButton" class="close-modal-btn">X</button>
+      </div>
+      <!-- Modal Header -->
+
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">IMG</th>
+            <th scope="col">NAME</th>
+            <th scope="col">DESCIPTION</th>
+            <th scope="col">ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($cursosNoComprados as $curso): ?>
+            <tr>
+              <th scope="row"><?php echo $curso[0]; ?></th>
+              <td> <img width=150 src="<?php echo $curso['imagen']; ?>"></td>
+              <td><?php echo $curso['nombre']; ?></td>
+              <td><?php echo $curso['descripcion']; ?></td>
+              <td class="">
+                <form action='delete-curso-usuario.php' method='post' style='margin: 0;'>
+                  <input type='hidden' name='id' value=<?php echo $curso[0]; ?>>
+                  <button type="submit" class="btn btn-danger">Eliminar</button>
+                </form>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+
+      <form action='edit_curso_usuario.php' method='post' style='margin: 0;'>
+        <?php foreach ($cursosNoComprados as $curso): ?>
+          <input type='hidden' name='ids[]' value=<?php echo $curso[0]; ?>>
+        <?php endforeach; ?>
+        <button type="submit" class="mt-3 ms-auto btn btn-success">Comprar</button>
+      </form>
+
+
+    </div>
+  </div>
+  <!-- / Your shopping cart Modal -->
 
   <script src=<?php echo '"./scripts/index.js?v=' .rand().'"' ?> type="module"></script>
 </body>

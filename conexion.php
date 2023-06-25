@@ -2,15 +2,15 @@
 
   class conexion {
 
-    // private $servidor = "localhost";
-    // private $usuario = "root";
-    // private $db = "taller-web-23";
-    // private $contrasenia = "";
-
     private $servidor = "localhost";
-    private $usuario = "id20889319_abelqh";
-    private $db = "id20889319_taller_web";
-    private $contrasenia = "Que/2002";
+    private $usuario = "root";
+    private $db = "taller-web-23";
+    private $contrasenia = "";
+
+    // private $servidor = "localhost";
+    // private $usuario = "id20889319_abelqh";
+    // private $db = "id20889319_taller_web";
+    // private $contrasenia = "Que/2002";
 
     private $conexion;
 
@@ -18,9 +18,9 @@
 
       try {
 
-        // $this -> conexion = new PDO("mysql:host=$this->servidor;dbname=$this->db;port=3307",$this->usuario,$this->contrasenia); 
+        $this -> conexion = new PDO("mysql:host=$this->servidor;dbname=$this->db;port=3307",$this->usuario,$this->contrasenia); 
 
-        $this -> conexion = new PDO("mysql:host=$this->servidor;dbname=$this->db",$this->usuario,$this->contrasenia); 
+        // $this -> conexion = new PDO("mysql:host=$this->servidor;dbname=$this->db",$this->usuario,$this->contrasenia); 
         
         $this -> conexion -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION); 
 
