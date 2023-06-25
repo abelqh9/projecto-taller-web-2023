@@ -4,7 +4,19 @@
   session_start();
 
   $objConexion = new conexion();
-  $userIdFromBd = $_SESSION['userLogin'];
+
+  if(isset($_SESSION['userLogin']) && !empty($_SESSION['userLogin'])){
+    $userIdFromBd = $_SESSION['userLogin'];
+  
+    // Get cursosyusuarios
+    $cursosDelusuarioFromBd = $objConexion -> consultar("SELECT * FROM cursosyusuarios JOIN cursos ON cursosyusuarios.curso_id = cursos.id WHERE cursosyusuarios.usuario_id = $userIdFromBd");
+  
+    $cursosComprados = array_filter($cursosDelusuarioFromBd, 'filterPurchaseds');
+    $cursosNoComprados = array_filter($cursosDelusuarioFromBd, 'filterNoPurchaseds');
+  
+    $cursosCompradosIds = array_column(array_map(function ($object) {return $object['id'];}, $cursosComprados), null);
+    $cursosNoCompradosIds = array_column(array_map(function ($object) {return $object['id'];}, $cursosNoComprados), null);
+  }
 
   // Get tecnologias
   $tecnologiasFromBd = $objConexion -> consultar("SELECT * FROM `tecnologias`");
@@ -17,10 +29,6 @@
   // Get cursos
   $cursosFromBd = $objConexion -> consultar("SELECT * FROM `cursos`");
   // print_r($cursosFromBd);
-  
-  // Get cursosyusuarios
-  $cursosDelusuarioFromBd = $objConexion -> consultar("SELECT * FROM cursosyusuarios JOIN cursos ON cursosyusuarios.curso_id = cursos.id WHERE cursosyusuarios.usuario_id = $userIdFromBd");
-  // print_r($cursosyusuariosFromBd);
 
   function filterPurchaseds($curso){
     return $curso['purchased'] > 0;
@@ -29,12 +37,6 @@
   function filterNoPurchaseds($curso){
     return $curso['purchased'] == 0;
   }
-
-  $cursosComprados = array_filter($cursosDelusuarioFromBd, 'filterPurchaseds');
-  $cursosNoComprados = array_filter($cursosDelusuarioFromBd, 'filterNoPurchaseds');
-
-  $cursosCompradosIds = array_column(array_map(function ($object) {return $object['id'];}, $cursosComprados), null);
-  $cursosNoCompradosIds = array_column(array_map(function ($object) {return $object['id'];}, $cursosNoComprados), null);
 
   if (isset($_GET['Message'])) {
     print '<script type="text/javascript">alert("' . $_GET['Message'] . '");</script>';
@@ -183,15 +185,15 @@
                     <p class="project-card__p"><?php echo $curso['descripcion'] ?></p>
                 </div>
                 <?php
-                  if (in_array($curso['id'], $cursosCompradosIds)) {
+                  if (isset($cursosCompradosIds) && in_array($curso['id'], $cursosCompradosIds)) {
                     ?>
                       <button type='button' class='btn btn-primary'>En tus cursos</button>
                     <?php
-                  } else if (in_array($curso['id'], $cursosNoCompradosIds)) {
+                  } else if (isset($cursosNoCompradosIds) && in_array($curso['id'], $cursosNoCompradosIds)) {
                     ?>
                       <button type='button' class='btn btn-primary'>En tu carrito</button>
                     <?php
-                  } else {
+                  } else if (isset($cursosNoCompradosIds)) {
                     ?>
                       <form action='add_curso_usuario.php' method='post' style='margin: 0;'>
                         <input type='hidden' name='curso_id' value=<?php echo $curso['id']; ?>>
