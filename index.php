@@ -146,10 +146,10 @@
 
     <section id="technologies" class="secundary-section" data-scroll-spy>
       <h2 class="secundary-section__h2">Technologies</h2>
-        <ul class="p-0">
+        <ul class="p-0 d-flex justify-center gap-4 flex-wrap">
           <?php foreach ($tecnologiasFromBd as $tecnologias) { ?>
             <li class="project-card">
-                <img class="project-card__img" src=<?php echo $tecnologias['imagen'] ?> alt=<?php echo $tecnologias['nombre'] ?> loading="lazy"/>
+                <img class="project-card__img" style="height: 12.5rem; object-fit: cover; width: 100%" src=<?php echo $tecnologias['imagen'] ?> alt=<?php echo $tecnologias['nombre'] ?> loading="lazy"/>
                 <div class="project-card__div">
                     <h3 class="project-card__h3"><?php echo $tecnologias['nombre'] ?></h3>
                     <p class="project-card__p"><?php echo $tecnologias['descripcion'] ?></p>
@@ -161,10 +161,10 @@
 
     <section id="projects" class="secundary-section" data-scroll-spy>
       <h2 class="secundary-section__h2">Projects</h2>
-      <ul class="p-0">
+      <ul class="p-0 d-flex gap-4 flex-wrap">
           <?php foreach ($proyectosFromBd as $proyecto) { ?>
             <li class="project-card">
-                <img class="project-card__img" src=<?php echo $proyecto['imagen'] ?> alt=<?php echo $proyecto['nombre'] ?> loading="lazy"/>
+                <img class="project-card__img" style="height: 12.5rem; object-fit: cover;" src=<?php echo $proyecto['imagen'] ?> alt=<?php echo $proyecto['nombre'] ?> loading="lazy"/>
                 <div class="project-card__div">
                     <h3 class="project-card__h3"><?php echo $proyecto['nombre'] ?></h3>
                     <p class="project-card__p"><?php echo $proyecto['descripcion'] ?></p>
@@ -176,10 +176,10 @@
 
     <section id="courses" class="secundary-section" data-scroll-spy>
       <h2 class="secundary-section__h2">Courses i sell</h2>
-      <ul class="p-0">
+      <ul class="p-0 d-flex gap-4 flex-wrap">
           <?php foreach ($cursosFromBd as $curso) { ?>
             <li class="project-card">
-                <img class="project-card__img" src=<?php echo $curso['imagen'] ?> alt=<?php echo $curso['nombre'] ?> loading="lazy"/>
+                <img class="project-card__img" style="height: 12.5rem; object-fit: cover;" src=<?php echo $curso['imagen'] ?> alt=<?php echo $curso['nombre'] ?> loading="lazy"/>
                 <div class="project-card__div">
                     <h3 class="project-card__h3"><?php echo $curso['nombre'] ?></h3>
                     <p class="project-card__p"><?php echo $curso['descripcion'] ?></p>
@@ -212,7 +212,7 @@
       <h2 class="secundary-section__h2">Contact me</h2>
       <p class="secundary-section__p">You can email me later at <span class="secundary-section__span">abelqh9@gmail.com</span></p>
       <p class="secundary-section__p">Or you can email me now:</p>
-      <form class="contact-me-form" data-contact-me-form>
+      <form class="contact-me-form" action="https://formsubmit.co/abelqh9@gmail.com" method="POST" >
           <div class="contact-me-form__div">
               <label class="contact-me-form__label" for="name">your name:</label>
               <input class="contact-me-form__input" type="text" name="name" id="name" placeholder="name" required title="Only letters and white spaces" pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$">
